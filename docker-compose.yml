@@ -1,0 +1,14 @@
+version: "3.9"           # Which version of docker compose syntax we’re using
+
+services:                 # We declare “services” (apps)
+  app:                    # Name of the service
+    build:                # How to build container
+      context: .          # Use the current folder to build the image (looks for Dockerfile)
+      args:
+        - DEV+true      # Build argument to specify development mode
+    ports:
+      - "8080:8000"         # Map port from your computer to container (door 8080 -> 80)
+    volumes:
+      - ./app:/app        # Sync code changes live (local folder connected to container folder)
+    command: >             # Start server inside container
+      sh -c "python manage.py runserver 0.0.0.0:8000" 
